@@ -1,4 +1,4 @@
-# Pula Agricultural Insurance – Survey Configuration & Field Agent Allocation Guide
+# Agricultural Insurance – Survey Configuration & Field Agent Allocation Guide
 **Prepared by:** Jackson Mugwe  
 **Date:** March 2026  
 **Tool:** KoboToolbox (live form deployed) 
