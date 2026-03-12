@@ -1,0 +1,227 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "7d967292",
+   "metadata": {
+    "_cell_guid": "b1076dfc-b9ad-4769-8c92-a6c4dae69d19",
+    "_uuid": "8f2839f25d086af736a60e9eeb907d3b93b6e0e5",
+    "execution": {
+     "iopub.execute_input": "2026-03-12T00:59:46.675167Z",
+     "iopub.status.busy": "2026-03-12T00:59:46.674830Z",
+     "iopub.status.idle": "2026-03-12T00:59:47.299858Z",
+     "shell.execute_reply": "2026-03-12T00:59:47.298958Z"
+    },
+    "papermill": {
+     "duration": 0.630602,
+     "end_time": "2026-03-12T00:59:47.301877",
+     "exception": false,
+     "start_time": "2026-03-12T00:59:46.671275",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# This Python 3 environment comes with many helpful analytics libraries installed\n",
+    "# It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python\n",
+    "# For example, here's several helpful packages to load\n",
+    "\n",
+    "import numpy as np # linear algebra\n",
+    "import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)\n",
+    "\n",
+    "# Input data files are available in the read-only \"../input/\" directory\n",
+    "# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory\n",
+    "\n",
+    "import os\n",
+    "for dirname, _, filenames in os.walk('/kaggle/input'):\n",
+    "    for filename in filenames:\n",
+    "        print(os.path.join(dirname, filename))\n",
+    "\n",
+    "# You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using \"Save & Run All\" \n",
+    "# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "183d851c",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-03-12T00:59:47.306634Z",
+     "iopub.status.busy": "2026-03-12T00:59:47.305963Z",
+     "iopub.status.idle": "2026-03-12T00:59:47.323837Z",
+     "shell.execute_reply": "2026-03-12T00:59:47.322998Z"
+    },
+    "papermill": {
+     "duration": 0.022034,
+     "end_time": "2026-03-12T00:59:47.325514",
+     "exception": false,
+     "start_time": "2026-03-12T00:59:47.303480",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "\n",
+    "np.random.seed(42)  # reproducible\n",
+    "\n",
+    "n = 50\n",
+    "dates = pd.date_range(start='2025-01-01', periods=n, freq='D')\n",
+    "\n",
+    "data = {\n",
+    "    'Farmer_ID': [f'FARMER_{i:04d}' for i in range(1, n+1)],\n",
+    "    'Region': np.random.choice(['East', 'North', 'South', 'West'], n),\n",
+    "    'Crop_Type': np.random.choice(['Maize', 'Rice', 'Soybean', 'Wheat'], n),\n",
+    "    'Planting_Date': dates,\n",
+    "    'Harvest_Date': dates + pd.to_timedelta(np.random.randint(90, 150, n), unit='D'),\n",
+    "    'Yield_kg_per_ha': np.round(np.random.uniform(1000, 9999, n), 2),\n",
+    "    'Rainfall_mm': np.round(np.random.uniform(50, 300, n), 1),\n",
+    "    'Irrigation_Effectiveness': np.random.choice(['Good', 'Average', 'Poor'], n, p=[0.4, 0.4, 0.2]),\n",
+    "    'Pest_Outbreak': np.random.choice(['Yes', 'No'], n, p=[0.3, 0.7]),\n",
+    "    'Field_Photo': ['photo_simulated.jpg'] * n,\n",
+    "    'Comments': np.random.choice(['Looks healthy', 'Some wilting', 'Heavy rain damage', '', 'Pests spotted'], n)\n",
+    "}\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "29a3209c",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-03-12T00:59:47.329481Z",
+     "iopub.status.busy": "2026-03-12T00:59:47.329156Z",
+     "iopub.status.idle": "2026-03-12T00:59:47.360536Z",
+     "shell.execute_reply": "2026-03-12T00:59:47.359668Z"
+    },
+    "papermill": {
+     "duration": 0.035559,
+     "end_time": "2026-03-12T00:59:47.362430",
+     "exception": false,
+     "start_time": "2026-03-12T00:59:47.326871",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "50 realistic Kobo submissions generated and saved!\n",
+      "     Farmer_ID Region Crop_Type Planting_Date Harvest_Date  Yield_kg_per_ha  \\\n",
+      "0  FARMER_0001  South   Soybean    2025-01-01   2025-04-18          1666.33   \n",
+      "1  FARMER_0002   West      Rice    2025-01-02   2025-04-27          4225.83   \n",
+      "2  FARMER_0003   East   Soybean    2025-01-03   2025-05-16          2042.71   \n",
+      "3  FARMER_0004  South     Wheat    2025-01-04   2025-05-07          8767.07   \n",
+      "4  FARMER_0005  South   Soybean    2025-01-05   2025-04-14          6609.06   \n",
+      "\n",
+      "   Rainfall_mm Irrigation_Effectiveness Pest_Outbreak          Field_Photo  \\\n",
+      "0        265.2                     Good            No  photo_simulated.jpg   \n",
+      "1         51.7                     Poor            No  photo_simulated.jpg   \n",
+      "2        177.7                     Good            No  photo_simulated.jpg   \n",
+      "3        154.4                     Good            No  photo_simulated.jpg   \n",
+      "4        105.5                     Good            No  photo_simulated.jpg   \n",
+      "\n",
+      "            Comments  \n",
+      "0      Looks healthy  \n",
+      "1                     \n",
+      "2  Heavy rain damage  \n",
+      "3                     \n",
+      "4       Some wilting  \n",
+      "\n",
+      "Shape: (50, 11)\n",
+      "\n",
+      "Data types:\n",
+      " Farmer_ID                           object\n",
+      "Region                              object\n",
+      "Crop_Type                           object\n",
+      "Planting_Date               datetime64[ns]\n",
+      "Harvest_Date                datetime64[ns]\n",
+      "Yield_kg_per_ha                    float64\n",
+      "Rainfall_mm                        float64\n",
+      "Irrigation_Effectiveness            object\n",
+      "Pest_Outbreak                       object\n",
+      "Field_Photo                         object\n",
+      "Comments                            object\n",
+      "dtype: object\n"
+     ]
+    }
+   ],
+   "source": [
+    "df_kobo = pd.DataFrame(data)\n",
+    "\n",
+    "df_kobo.to_csv('kobo_submissions.csv', index=False)\n",
+    "print(\"50 realistic Kobo submissions generated and saved!\")\n",
+    "print(df_kobo.head())\n",
+    "print(\"\\nShape:\", df_kobo.shape)\n",
+    "print(\"\\nData types:\\n\", df_kobo.dtypes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "42a0e939",
+   "metadata": {
+    "papermill": {
+     "duration": 0.001352,
+     "end_time": "2026-03-12T00:59:47.365251",
+     "exception": false,
+     "start_time": "2026-03-12T00:59:47.363899",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kaggle": {
+   "accelerator": "none",
+   "dataSources": [],
+   "dockerImageVersionId": 31286,
+   "isGpuEnabled": false,
+   "isInternetEnabled": true,
+   "language": "python",
+   "sourceType": "notebook"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.12"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": 3.859291,
+   "end_time": "2026-03-12T00:59:47.784463",
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "__notebook__.ipynb",
+   "output_path": "__notebook__.ipynb",
+   "parameters": {},
+   "start_time": "2026-03-12T00:59:43.925172",
+   "version": "2.6.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
